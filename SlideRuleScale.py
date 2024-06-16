@@ -55,7 +55,7 @@ class SlideRuleScale:
                 # Iterates over numbers until upper bound
                 while spec_mold["position"] < float(bound[1]):
                     try:  # Only add number if it has not yet been added (PREFERENCE FOR FIRST ROWS OF MOLD)
-                        self.scale_spec = self.scale_spec.append(spec_mold, verify_integrity=True)
+                        self.scale_spec = self.scale_spec._append(spec_mold, verify_integrity=True)
                     except ValueError:  # If number has already been added, do nothing
                         pass
                     # Iterates position with step of size interval
@@ -73,7 +73,7 @@ class SlideRuleScale:
         except FileNotFoundError:
             print("   FILE NOT FOUND: " + filename + "\n   Empty file is assumed.")
             spec_one_offs = pd.DataFrame()
-        self.scale_spec = self.scale_spec.append(spec_one_offs)  # Appends one-offs.csv data
+        self.scale_spec = self.scale_spec._append(spec_one_offs)  # Appends one-offs.csv data
         # Deletes any line that was in the same position as any of the one-offs that were just added
         self.scale_spec.drop_duplicates(subset="position", keep="last", inplace=True)
         self.scale_spec.reset_index(inplace=True)  # Removes names from index, leaving empty index (auto index)
